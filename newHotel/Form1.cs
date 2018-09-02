@@ -127,6 +127,8 @@ namespace newHotel
 
                     MessageBox.Show("Booking Success", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    
+
                 }
                 else
                 {

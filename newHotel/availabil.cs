@@ -305,7 +305,7 @@ namespace newHotel
 
         }
 
-        private DataTable loadCheckAvailability(String date)
+        private DataTable loadCheckAvailability(String fromDate,String toDate)
         {
             DataTable dt = new DataTable();
 
@@ -325,7 +325,17 @@ namespace newHotel
 
                     using (DBConnect db1 = new DBConnect())
                     {
-                        String q1 = "SELECT roomType,sum(noOfrooms) FROM roombook where chk_in = '"+date+"' and roomType = '" + roomType + "' GROUP by roomType";
+                        String q1;
+
+                        if (toDate == null)
+                        {
+                            q1 = "SELECT roomType,sum(noOfrooms) FROM roombook where chk_in <= '" + fromDate + "' and chk_out >= '"+fromDate+"' and roomType = '" + roomType + "' GROUP by roomType";
+
+                        }
+                        else
+                        {
+                            q1 = "SELECT roomType,sum(noOfrooms) FROM roombook where( (chk_in <= '" + fromDate + "' and chk_out >= '"+toDate+ "') OR (chk_out >= '"+fromDate+"' and chk_out <= '"+toDate+ "') OR (chk_in>= '"+fromDate+"' and chk_in <= '"+toDate+"') )and roomType = '" + roomType + "' GROUP by roomType";
+                        }
                         MySqlCommand cmd1 = new MySqlCommand(q1, db1.con);
                         MySqlDataReader r1 = cmd1.ExecuteReader();
                         if (r1.HasRows)
@@ -361,8 +371,21 @@ namespace newHotel
 
         private void button5_Click(object sender, EventArgs e)
         {
-            String date = chkin1.Value.ToString("yyyy-MM-dd");
-            dgvCheckAvailability.DataSource = loadCheckAvailability(date);
+            String fromdate = chkin1.Value.ToString("yyyy-MM-dd");
+            String todate = chkout2.Value.ToString("yyyy-MM-dd");
+
+            if(chkout2.Value.ToString("yyyy-MM-dd").Equals(DateTime.Today.ToString("yyyy-MM-dd")))
+            {
+                todate = null;
+            }
+            Console.WriteLine("Todate : "+todate);
+            dgvCheckAvailability.DataSource = loadCheckAvailability(fromdate,todate);
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            GenerateQuotaions g = new GenerateQuotaions();
+            g.Show();
         }
     }
 }
