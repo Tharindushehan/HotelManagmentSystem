@@ -54,16 +54,16 @@ namespace newHotel
 
         private void availabil_Load(object sender, EventArgs e)
         {
-            if(panel == "pnlCustomerdetails")
+            if (panel == "pnlCustomerdetails")
             {
                 pnlCustomerdetails.Show();
                 pnlHalldetails.Hide();
                 pnlCheckAvailability.Hide();
-               
-                
+
+
                 retrieve();
             }
-            else if(panel == "Halldetails")
+            else if (panel == "Halldetails")
             {
                 pnlCustomerdetails.Hide();
                 pnlHalldetails.Show();
@@ -72,22 +72,22 @@ namespace newHotel
 
                 retrieve2();
             }
-            else if(panel == "availability")
+            else if (panel == "availability")
             {
                 pnlCheckAvailability.BringToFront();
                 pnlHalldetails.Hide();
                 pnlCustomerdetails.Hide();
                 //retrieve1();
             }
-          
-           
+
+
         }
 
-   
+
 
         private void dataGridView2_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
         private void retrieve()
         {
@@ -111,7 +111,8 @@ namespace newHotel
         //    da.Fill(dt);
         //    dgvCheckAvailability.DataSource = dt;
         //}
-        private void retrieve2() {
+        private void retrieve2()
+        {
 
             DBConnect df = new DBConnect();
             MySqlCommand cmd = df.con.CreateCommand();
@@ -136,7 +137,7 @@ namespace newHotel
 
         private void pnlHalldetails_Paint(object sender, PaintEventArgs e)
         {
-           
+
         }
 
         private void dataGridView2_CellContentClick_2(object sender, DataGridViewCellEventArgs e)
@@ -183,17 +184,17 @@ namespace newHotel
 
             //try
             //{
-                DialogResult d = MessageBox.Show("Are you sure you want to Delete this position..?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (d.Equals(DialogResult.Yes))
-                {
-                    
-                    DBConnect db = new DBConnect();
-  
-                    String q = "delete from userbooking where cusId='" + txtCusID.Text + "'; delete from roombook where  cusId = '"+txtCusID.Text+"'";
-                    MySqlCommand cmd7 = new MySqlCommand(q, db.con);
-                    cmd7.ExecuteNonQuery();
-                    MessageBox.Show(" Deleted", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+            DialogResult d = MessageBox.Show("Are you sure you want to Delete this position..?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d.Equals(DialogResult.Yes))
+            {
+
+                DBConnect db = new DBConnect();
+
+                String q = "delete from userbooking where cusId='" + txtCusID.Text + "'; delete from roombook where  cusId = '" + txtCusID.Text + "'";
+                MySqlCommand cmd7 = new MySqlCommand(q, db.con);
+                cmd7.ExecuteNonQuery();
+                MessageBox.Show(" Deleted", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
 
 
@@ -235,7 +236,7 @@ namespace newHotel
             //  cmbMrMrs.Text = dr["MrMs"].ToString();
 
 
-          
+
 
 
 
@@ -244,7 +245,7 @@ namespace newHotel
 
         private void dgvHallDetails_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Form1 f2 = new Form1("hallbooking",txtCusID1.Text);
+            Form1 f2 = new Form1("hallbooking", txtCusID1.Text);
             f2.cmbMrMsH.Text = this.dgvHallDetails.CurrentRow.Cells[1].Value.ToString();
             f2.txtFirstnamehall.Text = this.dgvHallDetails.CurrentRow.Cells[2].Value.ToString();
             f2.txtLastnameHall.Text = this.dgvHallDetails.CurrentRow.Cells[3].Value.ToString();
@@ -266,8 +267,8 @@ namespace newHotel
             f2.pnlHallbooking.BringToFront();
             f2.Show();
             this.Close();
-            
-            
+
+
 
         }
 
@@ -305,87 +306,167 @@ namespace newHotel
 
         }
 
-        private DataTable loadCheckAvailability(String fromDate,String toDate)
+        private DataTable loadCheckAvailability(String fromDate, String toDate)
         {
             DataTable dt = new DataTable();
 
-            dt.Columns.Add("Room Type", typeof(String));
-            dt.Columns.Add("No of rooms available", typeof(int));
 
-            using (DBConnect db = new DBConnect())
+            if (cmbPackage.Text == "Room")
             {
-                String q = "select roomType,noOfrooms from rooms";
-                MySqlCommand cmd = new MySqlCommand(q, db.con);
-                MySqlDataReader r = cmd.ExecuteReader();
 
-                while (r.Read())
+                dt.Columns.Add("Room Type", typeof(String));
+                dt.Columns.Add("No of rooms available", typeof(int));
+
+                using (DBConnect db = new DBConnect())
                 {
-                    String roomType = r[0].ToString();
-                    String noOfTotalRooms = r[1].ToString();
+                    String q = "select roomType,noOfrooms from rooms";
+                    MySqlCommand cmd = new MySqlCommand(q, db.con);
+                    MySqlDataReader r = cmd.ExecuteReader();
 
-                    using (DBConnect db1 = new DBConnect())
+                    while (r.Read())
                     {
-                        String q1;
+                        String roomType = r[0].ToString();
+                        String noOfTotalRooms = r[1].ToString();
 
-                        if (toDate == null)
+                        using (DBConnect db1 = new DBConnect())
                         {
-                            q1 = "SELECT roomType,sum(noOfrooms) FROM roombook where chk_in <= '" + fromDate + "' and chk_out >= '"+fromDate+"' and roomType = '" + roomType + "' GROUP by roomType";
+                            String q1;
 
-                        }
-                        else
-                        {
-                            q1 = "SELECT roomType,sum(noOfrooms) FROM roombook where( (chk_in <= '" + fromDate + "' and chk_out >= '"+toDate+ "') OR (chk_out >= '"+fromDate+"' and chk_out <= '"+toDate+ "') OR (chk_in>= '"+fromDate+"' and chk_in <= '"+toDate+"') )and roomType = '" + roomType + "' GROUP by roomType";
-                        }
-                        MySqlCommand cmd1 = new MySqlCommand(q1, db1.con);
-                        MySqlDataReader r1 = cmd1.ExecuteReader();
-                        if (r1.HasRows)
-                        {
-                            while (r1.Read())
+                            if (toDate == null)
                             {
-                                String bookedRooms = r1[1].ToString();
-                                int availableRooms = Int32.Parse(noOfTotalRooms) - Int32.Parse(bookedRooms);
+                                q1 = "SELECT roomType,sum(noOfrooms) FROM roombook where chk_in <= '" + fromDate + "' and chk_out >= '" + fromDate + "' and roomType = '" + roomType + "' GROUP by roomType";
 
-                                if (availableRooms >= 0)
+                            }
+                            else
+                            {
+                                q1 = "SELECT roomType,sum(noOfrooms) FROM roombook where( (chk_in <= '" + fromDate + "' and chk_out >= '" + toDate + "') OR (chk_out >= '" + fromDate + "' and chk_out <= '" + toDate + "') OR (chk_in>= '" + fromDate + "' and chk_in <= '" + toDate + "') )and roomType = '" + roomType + "' GROUP by roomType";
+                            }
+                            MySqlCommand cmd1 = new MySqlCommand(q1, db1.con);
+                            MySqlDataReader r1 = cmd1.ExecuteReader();
+                            if (r1.HasRows)
+                            {
+                                while (r1.Read())
                                 {
-                                    dt.Rows.Add(roomType, availableRooms); 
-                                }
-                                else
-                                {
-                                    dt.Rows.Add(roomType, 0);
+                                    String bookedRooms = r1[1].ToString();
+                                    int availableRooms = Int32.Parse(noOfTotalRooms) - Int32.Parse(bookedRooms);
+
+                                    if (availableRooms >= 0)
+                                    {
+                                        dt.Rows.Add(roomType, availableRooms);
+                                    }
+                                    else
+                                    {
+                                        dt.Rows.Add(roomType, 0);
+                                    }
                                 }
                             }
-                        }
-                        else
-                        {
-                            dt.Rows.Add(roomType, Int32.Parse(noOfTotalRooms));
+                            else
+                            {
+                                dt.Rows.Add(roomType, Int32.Parse(noOfTotalRooms));
+                            }
                         }
                     }
                 }
-           
+
 
             }
+            else
+            {
 
-                return dt;
+                dt.Columns.Add("hall Type", typeof(String));
+                dt.Columns.Add("No of halls ", typeof(int));
+                using (DBConnect de = new DBConnect())
+                {
+
+                    String q2 = "select hallType,noOfhalls from halls";
+                    MySqlCommand cmd = new MySqlCommand(q2, de.con);
+                    MySqlDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        String package = r[0].ToString();
+                        String noOfhalls = r[1].ToString();
+
+                        using (DBConnect db1 = new DBConnect())
+                        {
+                            String q3;
+
+                            if (toDate == null)
+                            {
+                                q3 = "SELECT package FROM hallbook where chk_in <= '" + fromDate + "' and chk_out >= '" + fromDate + "' and package = '" + package + "' GROUP by package";
+
+                            }
+                            else
+                            {
+                                q3 = "SELECT package FROM hallbook where( (chk_in <= '" + fromDate + "' and chk_out >= '" + toDate + "') OR (chk_out >= '" + fromDate + "' and chk_out <= '" + toDate + "') OR (chk_in>= '" + fromDate + "' and chk_in <= '" + toDate + "') )and package = '" + package + "' GROUP by package";
+                            }
+
+                            MySqlCommand cmd1 = new MySqlCommand(q3, db1.con);
+                            MySqlDataReader r2 = cmd1.ExecuteReader();
+                            if (r2.HasRows)
+                            {
+                                while (r2.Read())
+                                { 
+                                    String bookedhalls = r2[1].ToString();
+                                    int availablehalls = Int32.Parse(noOfhalls) - Int32.Parse(bookedhalls);
+
+                                    if (availablehalls >= 0)
+                                    { 
+                                        dt.Rows.Add(package, availablehalls);
+                                    }
+                                    else
+                                    {
+                                        dt.Rows.Add(package, 0);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                dt.Rows.Add(package, Int32.Parse(noOfhalls));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dt;
+
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+
+            //private void button5_Click(object sender, EventArgs e)
+            //{
+            //    String fromdate = chkin1.Value.ToString("yyyy-MM-dd");
+            //    String todate = chkout2.Value.ToString("yyyy-MM-dd");
+
+            //    if (chkout2.Value.ToString("yyyy-MM-dd").Equals(DateTime.Today.ToString("yyyy-MM-dd")))
+            //    {
+            //        todate = null;
+            //    }
+            //    Console.WriteLine("Todate : " + todate);
+            //    dgvCheckAvailability.DataSource = loadCheckAvailability(fromdate, todate);
+            //}
+
+            private void btnSearch_Click(object sender, EventArgs e)
+            {
+                GenerateQuotaions g = new GenerateQuotaions();
+                g.Show();
+            }
+
+        private void btnCheck1_Click(object sender, EventArgs e)
         {
             String fromdate = chkin1.Value.ToString("yyyy-MM-dd");
             String todate = chkout2.Value.ToString("yyyy-MM-dd");
 
-            if(chkout2.Value.ToString("yyyy-MM-dd").Equals(DateTime.Today.ToString("yyyy-MM-dd")))
+            if (chkout2.Value.ToString("yyyy-MM-dd").Equals(DateTime.Today.ToString("yyyy-MM-dd")))
             {
                 todate = null;
             }
-            Console.WriteLine("Todate : "+todate);
-            dgvCheckAvailability.DataSource = loadCheckAvailability(fromdate,todate);
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            GenerateQuotaions g = new GenerateQuotaions();
-            g.Show();
+            Console.WriteLine("Todate : " + todate);
+            dgvCheckAvailability.DataSource = loadCheckAvailability(fromdate, todate);
         }
     }
+
 }
+     
+    

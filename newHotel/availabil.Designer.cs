@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlCustomerdetails = new System.Windows.Forms.Panel();
             this.btnUpdatedgr = new System.Windows.Forms.Button();
             this.txtCusID = new System.Windows.Forms.Label();
@@ -56,8 +56,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lblHalldetails = new System.Windows.Forms.Label();
             this.pnlCheckAvailability = new System.Windows.Forms.Panel();
+            this.btnCheck1 = new System.Windows.Forms.Button();
+            this.cmbPackage = new System.Windows.Forms.ComboBox();
             this.dgvCheckAvailability = new System.Windows.Forms.DataGridView();
-            this.btnCheck = new System.Windows.Forms.Button();
             this.lblAvailability = new System.Windows.Forms.Label();
             this.btnViewall = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -70,7 +71,6 @@
             this.chkin1 = new System.Windows.Forms.DateTimePicker();
             this.lblCheckout = new System.Windows.Forms.Label();
             this.lblCheckin = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.pnlCustomerdetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomerDetails)).BeginInit();
             this.pnlHalldetails.SuspendLayout();
@@ -358,9 +358,9 @@
             // 
             // pnlCheckAvailability
             // 
-            this.pnlCheckAvailability.Controls.Add(this.comboBox3);
+            this.pnlCheckAvailability.Controls.Add(this.btnCheck1);
+            this.pnlCheckAvailability.Controls.Add(this.cmbPackage);
             this.pnlCheckAvailability.Controls.Add(this.dgvCheckAvailability);
-            this.pnlCheckAvailability.Controls.Add(this.btnCheck);
             this.pnlCheckAvailability.Controls.Add(this.lblAvailability);
             this.pnlCheckAvailability.Controls.Add(this.btnViewall);
             this.pnlCheckAvailability.Controls.Add(this.btnSearch);
@@ -379,24 +379,45 @@
             this.pnlCheckAvailability.TabIndex = 92;
             this.pnlCheckAvailability.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCheckAvailability_Paint);
             // 
+            // btnCheck1
+            // 
+            this.btnCheck1.Location = new System.Drawing.Point(1080, 125);
+            this.btnCheck1.Name = "btnCheck1";
+            this.btnCheck1.Size = new System.Drawing.Size(75, 23);
+            this.btnCheck1.TabIndex = 99;
+            this.btnCheck1.Text = "Check";
+            this.btnCheck1.UseVisualStyleBackColor = true;
+            this.btnCheck1.Click += new System.EventHandler(this.btnCheck1_Click);
+            // 
+            // cmbPackage
+            // 
+            this.cmbPackage.FormattingEnabled = true;
+            this.cmbPackage.Items.AddRange(new object[] {
+            "Room",
+            "Hall"});
+            this.cmbPackage.Location = new System.Drawing.Point(872, 120);
+            this.cmbPackage.Name = "cmbPackage";
+            this.cmbPackage.Size = new System.Drawing.Size(180, 24);
+            this.cmbPackage.TabIndex = 98;
+            // 
             // dgvCheckAvailability
             // 
             this.dgvCheckAvailability.AllowUserToAddRows = false;
             this.dgvCheckAvailability.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.DarkGoldenrod;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            this.dgvCheckAvailability.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.DarkGoldenrod;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            this.dgvCheckAvailability.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCheckAvailability.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCheckAvailability.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvCheckAvailability.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCheckAvailability.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCheckAvailability.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvCheckAvailability.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCheckAvailability.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvCheckAvailability.Location = new System.Drawing.Point(64, 341);
@@ -408,16 +429,6 @@
             this.dgvCheckAvailability.RowTemplate.Height = 24;
             this.dgvCheckAvailability.Size = new System.Drawing.Size(1132, 433);
             this.dgvCheckAvailability.TabIndex = 97;
-            // 
-            // btnCheck
-            // 
-            this.btnCheck.Location = new System.Drawing.Point(1075, 125);
-            this.btnCheck.Name = "btnCheck";
-            this.btnCheck.Size = new System.Drawing.Size(94, 23);
-            this.btnCheck.TabIndex = 96;
-            this.btnCheck.Text = "Check";
-            this.btnCheck.UseVisualStyleBackColor = true;
-            this.btnCheck.Click += new System.EventHandler(this.button5_Click);
             // 
             // lblAvailability
             // 
@@ -446,7 +457,6 @@
             this.btnSearch.TabIndex = 93;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // lblsearchname
             // 
@@ -526,17 +536,6 @@
             this.lblCheckin.TabIndex = 84;
             this.lblCheckin.Text = "Check in";
             // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "Room",
-            "Hall"});
-            this.comboBox3.Location = new System.Drawing.Point(872, 120);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(180, 24);
-            this.comboBox3.TabIndex = 98;
-            // 
             // availabil
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -589,7 +588,6 @@
         private System.Windows.Forms.Panel pnlCheckAvailability;
         private System.Windows.Forms.Label lblAvailability;
         private System.Windows.Forms.Button btnViewall;
-        private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Label lblsearchname;
         private System.Windows.Forms.TextBox txtsearchitem;
         private System.Windows.Forms.Label lblseachcateg;
@@ -604,8 +602,10 @@
         private System.Windows.Forms.Button btnUpdatedgr;
         public System.Windows.Forms.Label txtCusID;
         private System.Windows.Forms.Label txtCusID1;
-        private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.DataGridView dgvCheckAvailability;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbPackage;
+     //   private System.Windows.Forms.Button button5_Click;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnCheck1;
     }
 }
